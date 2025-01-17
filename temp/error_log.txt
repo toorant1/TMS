@@ -1,0 +1,72 @@
+Array
+(
+    [status] => error
+    [code] => 500
+    [message] => PayloadValidation.__init__() missing 1 required positional argument: 'reply_to'
+    [errors] => Array
+        (
+        )
+
+)
+Array
+(
+    [status] => error
+    [code] => 500
+    [message] => PayloadValidation.__init__() missing 1 required positional argument: 'reply_to'
+    [errors] => Array
+        (
+        )
+
+)
+Array
+(
+    [status] => error
+    [code] => 500
+    [message] => PayloadValidation.__init__() missing 1 required positional argument: 'reply_to'
+    [errors] => Array
+        (
+        )
+
+)
+Array
+(
+    [status] => error
+    [code] => 500
+    [message] => PayloadValidation.__init__() missing 1 required positional argument: 'reply_to'
+    [errors] => Array
+        (
+        )
+
+)
+Array
+(
+    [status] => error
+    [code] => 500
+    [message] => PayloadValidation.__init__() missing 1 required positional argument: 'reply_to'
+    [errors] => Array
+        (
+        )
+
+)
+Array
+(
+    [message] => Invalid key=value pair (missing equal-sign) in Authorization header (hashed with SHA-256 and encoded with Base64): 'UK3hKvp2lwOYR+rPV+eQXPlG3pLqaFf9Ly77H09QeR8='.
+)
+Array
+(
+    [message] => Invalid key=value pair (missing equal-sign) in Authorization header (hashed with SHA-256 and encoded with Base64): 'UK3hKvp2lwOYR+rPV+eQXPlG3pLqaFf9Ly77H09QeR8='.
+)
+Array
+(
+    [message] => Unauthorized
+)
+Array
+(
+    [status] => error
+    [code] => 500
+    [message] => PayloadValidation.__init__() missing 1 required positional argument: 'reply_to'
+    [errors] => Array
+        (
+        )
+
+)

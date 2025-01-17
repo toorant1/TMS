@@ -1,0 +1,92 @@
+Script started
+Autoload and DB included
+POST Request received
+Data validated
+SMTP configuration found
+Attempting to send email
+Script started
+Autoload and DB included
+Fetching SMTP configuration
+SMTP configuration not found
+Script started
+Autoload and DB included
+Fetching SMTP configuration
+Attempting to send email
+Script started
+Autoload and DB included
+Fetching SMTP configuration
+Attempting to send email
+Script started
+Autoload and DB included
+master_userid: 1
+Fetching SMTP configuration for master_userid: 1
+Attempting to send email
+Script started
+master_userid: 1
+Attempting to send email
+Received JSON Payload: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Fetched SMTP Config: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Incoming Request: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Fetched SMTP Config: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Using static SMTP settings: Host=smtp.hostinger.com, Port=587, User=your_email@yourdomain.com
+Email error: SMTP Error: Could not authenticate.
+Script ended
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Using static SMTP settings: Host=smtp.hostinger.com, Port=587, User=your_email@yourdomain.com
+Email error: SMTP Error: Could not authenticate.
+Script ended
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Using static SMTP settings: Host=smtp.hostinger.com, Port=587, User=your_email@yourdomain.com
+Email error: SMTP Error: Could not authenticate.
+Script ended
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Using static SMTP settings: Host=smtp.hostinger.com, Port=587, User=no-replay@thetoorant.com
+Email sent successfully
+Script ended
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}
+Script started
+Received data: {"master_userid":"1","email":"toorant.c@gmail.com"}
+Running query: SELECT smtp_host, smtp_port, smtp_user, smtp_password, smtp_status 
+          FROM master_email_configuration 
+          WHERE master_user_id = ? LIMIT 1
+SMTP Config fetched: {"smtp_host":"smtp.hostinger.com","smtp_port":465,"smtp_user":"no-replay@thetoorant.com","smtp_password":"sL$S]P~p5","smtp_status":1}

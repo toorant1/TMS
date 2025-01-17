@@ -1,0 +1,4 @@
+CREATE INDEX idx_master_user_id ON master_email_configuration (master_user_id);
+
+
+

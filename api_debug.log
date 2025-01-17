@@ -1,0 +1,4 @@
+HTTP Status: 400
+Response:   { "status": "error", "code": "CHAT_0306", "message": "Sender detail not found!", "errors": {} } 
+HTTP Status: 400
+Response:   { "status": "error", "code": "CHAT_0306", "message": "Sender detail not found!", "errors": {} } 

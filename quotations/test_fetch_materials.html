@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Fetch Materials</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet">
+</head>
+<body>
+    <select id="material_name" class="form-select"></select>
+    <script>
+        $(document).ready(function () {
+            fetch('fetch_materials.php')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Materials:", data);
+                })
+                .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
