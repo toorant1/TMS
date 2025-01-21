@@ -150,7 +150,6 @@ $result = $stmt->get_result();
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YZm9/t7COm39pJp2RXC8" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-QsQMA9WRy6j5gpPzCblXV7G8IOwaHEdI5tWBp+DhUUMfYpXI+IflX5ftZR3Niw1" crossorigin="anonymous"></script>
     <script src="fetch_tickets.js"></script>
-    <script src="ticket_send.js"></script>
     
     
     
@@ -224,9 +223,11 @@ $result = $stmt->get_result();
 <body>
 
     <?php include('../headers/header.php'); ?>
-    <div class="container mt-5">
-
+    
+    <div class="container mt-5" style="padding-top: 10px;">
+    <?php include('../headers/header_buttons.php'); ?> <!-- Include buttons file -->
         <div class="dashboard-header text-center mb-4">
+        
             <h1 class="text-white fw-bold">
                 <i class="bi bi-ticket-detailed-fill"></i> Tickets Dashboard
             </h1>
@@ -488,14 +489,14 @@ $result = $stmt->get_result();
                                     <td><?= htmlspecialchars($row['Problem Statement']); ?></td>
                                     <td class="text-center">
                                         <div>
-                                            <button class="btn btn-outline-primary btn-sm d-flex align-items-center mb-2 w-100" type="button"
-                                                onclick="sendWhatsAppMessage('client', '<?= htmlspecialchars($row['Internal Ticket ID']); ?>')">
-                                                <i class="bi bi-whatsapp me-2" style="color: #25D366;"></i> To Client
-                                            </button>
-                                            <button class="btn btn-outline-primary btn-sm d-flex align-items-center w-100" type="button"
-                                                onclick="sendWhatsAppMessage('engineer', '<?= htmlspecialchars($row['Internal Ticket ID']); ?>')">
-                                                <i class="bi bi-whatsapp me-2" style="color: #25D366;"></i> To Engineers
-                                            </button>
+                                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center mb-2 w-100" type="button"
+                                                onclick="sendWhatsAppMessage('client', '<?= htmlspecialchars($row['Ticket ID']); ?>')">
+                                            <i class="bi bi-whatsapp me-2" style="color: #25D366;"></i> To Client
+                                        </button>
+                                        <button class="btn btn-outline-primary btn-sm d-flex align-items-center w-100" type="button"
+                                                onclick="sendWhatsAppMessage('engineer', '<?= htmlspecialchars($row['Ticket ID']); ?>')">
+                                            <i class="bi bi-whatsapp me-2" style="color: #25D366;"></i> To Engineers
+                                        </button>
                                         </div>
                                     </td>
 
@@ -519,9 +520,34 @@ $result = $stmt->get_result();
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
 
+    <script>
+function sendWhatsAppMessage(recipientType, ticketId) {
+    const url = 'ticket_send.php'; // Endpoint to handle WhatsApp message sending
 
+    // Prepare the payload
+    const data = new FormData();
+    data.append('recipient_type', recipientType);
+    data.append('ticket_id', ticketId);
+
+    // Send the POST request
+    fetch(url, {
+        method: 'POST',
+        body: data,
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === 'success') {
+            alert(result.message);
+        } else {
+            alert('Error: ' + result.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An unexpected error occurred.');
+    });
+}
 </script>
 
 </body>

@@ -16,8 +16,8 @@ require_once __DIR__ . '/../database/helpers.php';
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="<?= base_url('temp/testing.php'); ?>">Testing and Validations </a>
+                <li hidden class="nav-item" >
+                    <a hiddnen class="nav-link active" href="<?= base_url('temp/testing.php'); ?>">Testing and Validations </a>
                 </li>
 
                 <li class="nav-item">
@@ -46,6 +46,9 @@ require_once __DIR__ . '/../database/helpers.php';
                     <a class="nav-link active" href="<?= base_url('ticket/dashboard.php'); ?>">Tickets</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="<?= base_url('billing/dashboard.php'); ?>">Billing</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" href="<?= base_url('settings/dashboard.php'); ?>">Settings</a>
                 </li>
                 <li class="nav-item">
@@ -55,7 +58,7 @@ require_once __DIR__ . '/../database/helpers.php';
                     <a class="nav-link" href="<?= base_url('tableStructure/table.php'); ?>">Table Structure</a>
                 </li>
                 
-                <li class="nav-item">
+                <li hidden class="nav-item">
                     <a class="nav-link" href="<?= base_url('file_management/show_files.php'); ?>">Software Downloads</a>
                 </li>
                 <li class="nav-item">

@@ -45,12 +45,12 @@ try {
         LEFT JOIN master_tickets_main_causes mc ON mt.cause_id = mc.id
         LEFT JOIN account a ON mt.account_id = a.id
         LEFT JOIN contacts c ON mt.contact_id = c.id
-        WHERE mt.ticket_id = ? AND mt.master_user_id = ?
+        WHERE mt.id = ? AND mt.master_user_id = ?
         LIMIT 1
     ";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("si", $ticket_id, $master_userid);
+    $stmt->bind_param("ii", $ticket_id, $master_userid);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -64,6 +64,7 @@ try {
     echo json_encode([
         'status' => 'success',
         'data' => $ticket_data
+
     ]);
 } catch (Exception $e) {
     // Return an error response
