@@ -106,6 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
             $_SESSION['user_id'] = $user_id;       // Store user_id
             $_SESSION['master_userid'] = $user['id'];  // Store user primary key
             $_SESSION['token'] = $user['token'];
+            $_SESSION['master_api_key'] = $user['token'];
 
 
             // Redirect to dashboard
