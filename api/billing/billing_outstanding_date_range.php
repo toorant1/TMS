@@ -12,6 +12,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 
+     // Validate the date range (max 3 months)
+     $startDate = new DateTime($from_date);
+     $endDate = new DateTime($to_date);
+     $interval = $startDate->diff($endDate);
+     if ($interval->m > 3 || $interval->y > 0) {
+         http_response_code(400); // Bad Request
+         echo json_encode([
+             'error' => 'Date range exceeds 3 months. Please provide a valid range.',
+             'code' => 400
+         ]);
+         exit;
+     }
+ 
+
     try {
         // Fetch status counts
         $statusCountsQuery = "
