@@ -42,7 +42,27 @@ $query = "SELECT id, account_name, address, email, mobile, token
 // Add search condition if search query is provided
 if (!empty($search_query)) {
     $search_query = $conn->real_escape_string($search_query);
-    $query .= " AND account_name LIKE '%$search_query%'";
+    $query .= " AND (
+        LOWER(account_name) LIKE LOWER('%$search_query%') OR
+        LOWER(address) LIKE LOWER('%$search_query%') OR
+        LOWER(state) LIKE LOWER('%$search_query%') OR
+        LOWER(district) LIKE LOWER('%$search_query%') OR
+        LOWER(city) LIKE LOWER('%$search_query%') OR
+        LOWER(pincode) LIKE LOWER('%$search_query%') OR
+        LOWER(country) LIKE LOWER('%$search_query%') OR
+        LOWER(account_type) LIKE LOWER('%$search_query%') OR
+        LOWER(mobile) LIKE LOWER('%$search_query%') OR
+        LOWER(email) LIKE LOWER('%$search_query%') OR
+        LOWER(remark) LIKE LOWER('%$search_query%') OR
+        LOWER(gst) LIKE LOWER('%$search_query%') OR
+        LOWER(pan) LIKE LOWER('%$search_query%') OR
+        LOWER(tan) LIKE LOWER('%$search_query%') OR
+        LOWER(msme) LIKE LOWER('%$search_query%') OR
+        LOWER(bank_name) LIKE LOWER('%$search_query%') OR
+        LOWER(branch) LIKE LOWER('%$search_query%') OR
+        LOWER(ifsc) LIKE LOWER('%$search_query%') OR
+        LOWER(account_no) LIKE LOWER('%$search_query%')
+    )";
 }
 
 // Add ordering
@@ -68,7 +88,8 @@ if ($result === false) {
 <body>
 <?php include('../headers/header.php'); ?> <!-- Include the header file here -->
 
-<div class="container mt-5">
+<div class="container mt-5" style="padding-top: 10px;">
+    <?php include('../headers/header_buttons.php'); ?> <!-- Include the header file here -->
     <h1 class="text-center mb-4">Accounts Dashboard</h1>
 
     <!-- Summary Cards -->
@@ -104,8 +125,9 @@ if ($result === false) {
     <!-- Search Box and Create New Account Button -->
     <div class="d-flex justify-content-between align-items-center mb-3">
     <form method="GET" class="d-flex w-75">
-        <input type="text" name="search" class="form-control me-2" placeholder="Search by Account Name" value="<?= htmlspecialchars($search_query); ?>">
-        <button type="submit" class="btn btn-primary">Search</button>
+        <input type="text" name="search" class="form-control me-2" placeholder="Search" value="<?= htmlspecialchars($search_query); ?>">
+        <button type="submit" class="btn btn-primary me-2">Search</button>
+        <a href="?" class="btn btn-secondary">Reset</a> <!-- Reset Button -->
     </form>
     <a href="add_account.php" class="btn btn-primary">Create New Account</a>
 </div>

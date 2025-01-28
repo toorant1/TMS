@@ -157,105 +157,194 @@ if (!empty($_GET['to_date'])) {
     </div>
 
     <script>
-
 document.getElementById('update-date-range').addEventListener('click', updateDashboard);
 document.addEventListener('DOMContentLoaded', updateDashboard);
 
-        const masterUserId = <?= json_encode($master_userid); ?>;
+const masterUserId = <?= json_encode($master_userid); ?>;
 
-        
+async function fetchTicketData(fromDate, toDate) {
+    try {
+        const response = await fetch(`../api/billing/billing_update_date_range.php?master_user_id=${masterUserId}&from_date=${fromDate}&to_date=${toDate}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching ticket data:', error);
+        return { code: 500, message: 'Failed to fetch ticket data.' };
+    }
+}
 
-        async function fetchSummaryData(fromDate, toDate) {
-            const response = await fetch(`../api/billing/billing_update_date_range.php?master_user_id=${masterUserId}&from_date=${fromDate}&to_date=${toDate}`);
-            return response.json();
-        }
+async function fetchBillingSummaryData(fromDate, toDate) {
+    try {
+        const response = await fetch(`../api/billing/billing_outstanding_date_range.php?master_user_id=${masterUserId}&from_date=${fromDate}&to_date=${toDate}`);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching billing summary:', error);
+        return { code: 500, message: 'Failed to fetch billing summary.' };
+    }
+}
 
-
-        async function updateDashboard() {
+async function updateTicketTable(fromDate, toDate) {
     const ticketsTableBody = document.getElementById('tickets-table-body');
-    ticketsTableBody.innerHTML = '<tr><td colspan="11">Loading...</td></tr>'; // Show loading state
+    ticketsTableBody.innerHTML = '<tr><td colspan="11">Loading tickets...</td></tr>';
 
+    const ticketData = await fetchTicketData(fromDate, toDate);
+
+    if (ticketData.code !== 200) {
+        ticketsTableBody.innerHTML = `<tr><td colspan="11">Error fetching ticket data: ${ticketData.message || 'Unknown error'}</td></tr>`;
+        return;
+    }
+
+    ticketsTableBody.innerHTML = ticketData.tickets?.length
+        ? ticketData.tickets.map((ticket, index, tickets) => {
+              let isFirstRowForTicket = index === 0 || tickets[index - 1]['Ticket ID'] !== ticket['Ticket ID'];
+
+              return `
+                <tr>
+                    ${
+                        isFirstRowForTicket
+                            ? `
+                                <td rowspan="1">
+                                    <a href="ticket_details.php?ticket_id=${encodeURIComponent(ticket['Ticket ID'])}">
+                                        ${ticket['Internal Ticket ID']}
+                                    </a>
+                                </td>
+                                <td rowspan="1">
+                                    ${ticket['Ticket Date'] ? new Date(ticket['Ticket Date']).toLocaleDateString('en-GB') : 'N/A'}
+                                </td>
+                                <td rowspan="1">${ticket['Account Name'] || 'N/A'}</td>
+                                <td rowspan="1">${ticket['Ticket Type'] || 'N/A'}</td>
+                                <td rowspan="1">${ticket['Ticket Status'] || 'N/A'}</td>
+                            `
+                            : `
+                                <td colspan="5"></td>
+                            `
+                    }
+                    <td>${ticket['Bill No'] || ''}</td>
+                    <td>${ticket['Bill Date'] ? new Date(ticket['Bill Date']).toLocaleDateString('en-GB') : ''}</td>
+                    <td style="background-color: ${
+                        ticket['Outstanding Amount'] > 0
+                            ? new Date(ticket['Due Date']) < new Date()
+                                ? '#f8d7da'
+                                : new Date(ticket['Due Date']) <= new Date(new Date().setDate(new Date().getDate() + 7))
+                                ? '#fff3cd'
+                                : '#d4edda'
+                            : 'transparent'
+                    }; color: ${
+                        ticket['Outstanding Amount'] > 0
+                            ? new Date(ticket['Due Date']) < new Date()
+                                ? 'red'
+                                : 'black'
+                            : 'green'
+                    }">
+                        ${ticket['Due Date'] ? new Date(ticket['Due Date']).toLocaleDateString('en-GB') : ''}
+                    </td>
+                    <td>${parseFloat(ticket['Bill Amount'] || 0).toFixed(2)}</td>
+                    <td>${parseFloat(ticket['Total Payment Received'] || 0).toFixed(2)}</td>
+                    <td style="color: ${
+                        ticket['Outstanding Amount'] === 0
+                            ? 'green'
+                            : ticket['Outstanding Amount'] < ticket['Bill Amount']
+                            ? 'orange'
+                            : 'red'
+                    }; background-color: ${
+                        ticket['Outstanding Amount'] === 0
+                            ? '#d4edda'
+                            : ticket['Outstanding Amount'] < ticket['Bill Amount']
+                            ? '#fff3cd'
+                            : '#f8d7da'
+                    }">
+                        ${parseFloat(ticket['Outstanding Amount'] || 0).toFixed(2)}
+                    </td>
+                </tr>
+            `;
+          }).join('')
+        : '<tr><td colspan="11">No tickets found for the selected date range.</td></tr>';
+}
+
+async function updateBillingSummary(fromDate, toDate) {
+    const billingSummaryContainer = document.getElementById('billing-summary');
+    billingSummaryContainer.innerHTML = '<li class="list-group-item">Loading billing summary...</li>';
+
+    const billingData = await fetchBillingSummaryData(fromDate, toDate);
+
+    if (!billingData.billingSummary) {
+        billingSummaryContainer.innerHTML = '<p>Error fetching billing summary data.</p>';
+        console.error('Invalid Billing Summary:', billingData);
+        return;
+    }
+
+    billingSummaryContainer.innerHTML = `
+        <li class="list-group-item">
+            <strong>Total Billing Amount:</strong>
+            <span class="float-end">${parseFloat(billingData.billingSummary.totalBillingAmount || 0).toFixed(2)}</span>
+        </li>
+        <li class="list-group-item">
+            <strong>Total Receipt Amount:</strong>
+            <span class="float-end">${parseFloat(billingData.billingSummary.totalReceiptAmount || 0).toFixed(2)}</span>
+        </li>
+        <li class="list-group-item">
+            <strong>Total Outstanding Amount:</strong>
+            <span class="float-end">${parseFloat(billingData.billingSummary.totalOutstandingAmount || 0).toFixed(2)}</span>
+        </li>
+        <li class="list-group-item">
+            <strong>Overdue Payment Total:</strong>
+            <span class="float-end text-danger">${parseFloat(billingData.billingSummary.overdueAmount || 0).toFixed(2)}</span>
+        </li>
+        <li class="list-group-item">
+            <strong>Next Week Due Amount:</strong>
+            <span class="float-end text-warning">${parseFloat(billingData.billingSummary.nextWeekDueAmount || 0).toFixed(2)}</span>
+        </li>
+    `;
+}
+
+async function updateDashboard() {
     const fromDate = document.getElementById('from_date').value;
     const toDate = document.getElementById('to_date').value;
 
+    // Call the functions for tickets table and billing summary independently
+    updateTicketTable(fromDate, toDate);
+    updateBillingSummary(fromDate, toDate);
+    updateTicketStatusSummary(fromDate, toDate); 
+}
+
+
+
+// Function to fetch ticket status summary data
+async function fetchTicketStatusSummary(fromDate, toDate) {
     try {
-        const data = await fetchSummaryData(fromDate, toDate);
-
-        if (data.code !== 200) {
-            ticketsTableBody.innerHTML = `<tr><td colspan="11">Error fetching data: ${data.message || 'Unknown error'}</td></tr>`;
-            return;
-        }
-
-        // Update Tickets Table
-        ticketsTableBody.innerHTML = data.tickets?.length
-            ? data.tickets.map((ticket, index, tickets) => {
-                let isFirstRowForTicket = index === 0 || tickets[index - 1]['Ticket ID'] !== ticket['Ticket ID'];
-
-                return `
-                    <tr>
-                        ${
-                            isFirstRowForTicket
-                                ? `
-                                    <td rowspan="1">
-                                        <a href="ticket_details.php?ticket_id=${encodeURIComponent(ticket['Ticket ID'])}">
-                                            ${ticket['Internal Ticket ID']}
-                                        </a>
-                                    </td>
-                                    <td rowspan="1">
-                                        ${ticket['Ticket Date'] ? new Date(ticket['Ticket Date']).toLocaleDateString('en-GB') : 'N/A'}
-                                    </td>
-                                    <td rowspan="1">${ticket['Account Name'] || 'N/A'}</td>
-                                    <td rowspan="1">${ticket['Ticket Type'] || 'N/A'}</td>
-                                    <td rowspan="1">${ticket['Ticket Status'] || 'N/A'}</td>
-                                `
-                                : `
-                                    <td colspan="5"></td>
-                                `
-                        }
-                        <td>${ticket['Bill No'] || ''}</td>
-                        <td>${ticket['Bill Date'] ? new Date(ticket['Bill Date']).toLocaleDateString('en-GB') : ''}</td>
-                        <td style="background-color: ${
-                            ticket['Outstanding Amount'] > 0
-                                ? new Date(ticket['Due Date']) < new Date()
-                                    ? '#f8d7da' // Overdue: bg-danger
-                                    : new Date(ticket['Due Date']) <= new Date(new Date().setDate(new Date().getDate() + 7))
-                                    ? '#fff3cd' // Due in Next 7 Days: bg-warning
-                                    : '#d4edda' // Regular Due: bg-success
-                                : 'transparent' // No Outstanding Amount
-                        }; color: ${
-                            ticket['Outstanding Amount'] > 0
-                                ? new Date(ticket['Due Date']) < new Date()
-                                    ? 'red'
-                                    : 'black'
-                                : 'green'
-                        }">
-                            ${ticket['Due Date'] ? new Date(ticket['Due Date']).toLocaleDateString('en-GB') : ''}
-                        </td>
-                        <td>${parseFloat(ticket['Bill Amount'] || 0).toFixed(2)}</td>
-                        <td>${parseFloat(ticket['Total Payment Received'] || 0).toFixed(2)}</td>
-                        <td style="color: ${
-                            ticket['Outstanding Amount'] === 0
-                                ? 'green'
-                                : ticket['Outstanding Amount'] < ticket['Bill Amount']
-                                ? 'orange'
-                                : 'red'
-                        }; background-color: ${
-                            ticket['Outstanding Amount'] === 0
-                                ? '#d4edda'
-                                : ticket['Outstanding Amount'] < ticket['Bill Amount']
-                                ? '#fff3cd'
-                                : '#f8d7da'
-                        }">
-                            ${parseFloat(ticket['Outstanding Amount'] || 0).toFixed(2)}
-                        </td>
-                    </tr>
-                `;
-            }).join('')
-            : '<tr><td colspan="11">No tickets found for the selected date range.</td></tr>';
+        const response = await fetch(`../api/billing/ticket_status_summary.php?master_user_id=${masterUserId}&from_date=${fromDate}&to_date=${toDate}`);
+        const data = await response.json();
+        return data;
     } catch (error) {
-        ticketsTableBody.innerHTML = `<tr><td colspan="11">Error: ${error.message || 'Failed to fetch data.'}</td></tr>`;
-        console.error('Error updating dashboard:', error);
+        console.error('Error fetching ticket status summary:', error);
+        return { code: 500, message: 'Failed to fetch ticket status summary.' };
     }
+}
+
+// Function to update the Ticket Status Summary card
+async function updateTicketStatusSummary(fromDate, toDate) {
+    const statusSummaryContainer = document.getElementById('status-summary');
+    statusSummaryContainer.innerHTML = '<p>Loading status summary...</p>';
+
+    const statusData = await fetchTicketStatusSummary(fromDate, toDate);
+
+    if (statusData.code !== 200) {
+        statusSummaryContainer.innerHTML = `<p>Error: ${statusData.message || 'Failed to fetch status summary.'}</p>`;
+        return;
+    }
+
+    statusSummaryContainer.innerHTML = statusData.statusCounts.length
+        ? statusData.statusCounts
+              .map(status => `
+                <button type="button" class="btn btn-outline-primary d-flex justify-content-between align-items-center mb-2 w-100" style="padding: 10px;">
+                  <span style="flex-grow: 1; text-align: left;">${status.status_name}</span>
+                  <span style="flex-shrink: 0; text-align: right;" class="badge bg-primary">${status.count}</span>
+              </button>
+
+              `)
+              .join('')
+        : '<p>No status data available.</p>';
 }
 
 

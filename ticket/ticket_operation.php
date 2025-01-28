@@ -175,6 +175,7 @@ $defaultImage = "https://via.placeholder.com/150/007bff/ffffff?text=" . urlencod
     <title>Ticket Operation</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="material_movement_add_mat.js"></script>
+    <script src="../api/pdf_api/pdf.js"></script>
     
 
     <style>
@@ -216,6 +217,7 @@ $defaultImage = "https://via.placeholder.com/150/007bff/ffffff?text=" . urlencod
         <div class="center-buttons mb-4">
 
 
+        <button onclick="convertToPDF()">Convert This Page to PDF</button>
             <a href="material_challan.php?ticket_id=<?= urlencode($ticket['Ticket ID']); ?>&token=<?= urlencode($ticket_token); ?>" class="btn btn-success">Material Challan</a>
             <a href="rgp.php?ticket_id=<?= urlencode($ticket['Ticket ID']); ?>&token=<?= urlencode($ticket_token); ?>" class="btn btn-warning">RGP</a>
             <a href="email_report.php?ticket_id=<?= urlencode($ticket['Ticket ID']); ?>&token=<?= urlencode($ticket_token); ?>" class="btn btn-info">Report Email to Client</a>
