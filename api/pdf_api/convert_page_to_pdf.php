@@ -11,17 +11,43 @@ try {
         // Set up Dompdf options
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
-        $options->set('defaultFont', 'DejaVu Sans'); // Default font
+        $options->set('defaultFont', 'DejaVu Sans');
+        $options->set('isRemoteEnabled', true); // Enable remote resources (images, CSS, fonts)
+
+        // Add styles for proper formatting & narrow borders
+        $formattedHtml = "
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <style>
+                @page {
+                    size: A4 portrait;
+                    margin: 10mm 8mm 10mm 8mm; /* Top, Right, Bottom, Left (Narrow Borders) */
+                }
+                body {
+                    font-family: 'DejaVu Sans', sans-serif;
+                    margin: 0;
+                    padding: 5px;
+                }
+                .page-break {
+                    page-break-before: always;
+                }
+            </style>
+        </head>
+        <body>
+            $htmlContent
+        </body>
+        </html>";
 
         // Initialize Dompdf
         $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($htmlContent);
-        $dompdf->setPaper('A4', 'portrait'); // Paper size
+        $dompdf->loadHtml($formattedHtml);
+        $dompdf->setPaper('A4', 'portrait'); // Set paper size to A4 portrait
         $dompdf->render();
 
-        // Send PDF output to the browser for display
+        // Stream PDF to browser
         header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="page.pdf"'); // Inline for opening in a tab
+        header('Content-Disposition: inline; filename="page.pdf"');
         echo $dompdf->output();
     } else {
         throw new Exception('Invalid request. Please provide HTML content.');
