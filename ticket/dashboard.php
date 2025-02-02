@@ -89,7 +89,7 @@ foreach ($detailedCardsQuery as $key => $query) {
             <h1 class="fw-bold">
                 <i class="bi bi-ticket-detailed-fill"></i> Tickets Dashboard
             </h1>
-            <p>Resolve Faster, Work Smarter.</p>
+            <p>Work Smarter, Resolve Faster.</p>
         </div>
 
 

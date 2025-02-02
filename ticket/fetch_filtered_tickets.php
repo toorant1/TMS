@@ -9,6 +9,9 @@ if (!isset($_SESSION['master_userid'])) {
 $master_userid = $_SESSION['master_userid'];
 $filters = json_decode($_POST['filters'], true);
 
+
+
+
 $query = "
     SELECT 
         mt.id AS `Ticket ID`, 
@@ -22,7 +25,9 @@ $query = "
         mt.ticket_token AS `Token`,
         acc.city AS `City`,
         acc.state AS `State`,
+        acc.id as `account_id`,
         acc.country AS `Country`,
+        c.id as `contact_id`, 
         c.name AS `Contact Person`,
         c.mobile1 AS `Contact Mobile`,
         IFNULL(mc.main_cause, 'N/A') AS `Main Cause`
@@ -117,10 +122,19 @@ if ($result->num_rows > 0) {
                 </a>
                 <br>" . htmlspecialchars(date('D - d-M-Y', strtotime($row['Ticket Date']))) . "
             </td>
-            <td>
-                <strong>" . htmlspecialchars($row['Account Name']) . "</strong> (" . htmlspecialchars($row['City']) . ", " . htmlspecialchars($row['State']) . ")
-                <br>" . htmlspecialchars($row['Contact Person']) . " - " . htmlspecialchars($row['Contact Mobile']) . "
-            </td>
+          <td>
+    <a href='account_tickets.php?account_id=" . urlencode($row['account_id']) . "&token=" . urlencode($row['Token']) . "' 
+       class='text-primary'>
+        <strong>" . htmlspecialchars($row['Account Name']) . "</strong>
+    </a> (" . htmlspecialchars($row['City']) . ", " . htmlspecialchars($row['State']) . ")
+    <br>
+    <a href='contact_tickets.php?contact_id=" . urlencode($row['contact_id']) . "' 
+       class='text-primary'>
+        " . htmlspecialchars($row['Contact Person']) . "
+    </a> - " . htmlspecialchars($row['Contact Mobile']) . "
+</td>
+
+
             <td>" . htmlspecialchars($row['Ticket Type']) . "</td>
             <td>" . htmlspecialchars($row['Priority']) . "</td>
             <td>" . htmlspecialchars($row['Status']) . "
