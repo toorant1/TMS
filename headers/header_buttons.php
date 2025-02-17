@@ -97,5 +97,12 @@
                 <i class="fas fa-cubes"></i> Materials
             </button>
         </div>
+        <div class="col-md-2 mb-3">
+            <button type="button" class="btn custom-btn custom-btn-warning w-100"
+                onclick="window.location.href='<?= base_url('purchase/dashboard.php'); ?>'">
+                <i class="fas fa-cubes"></i> Purchase
+            </button>
+        </div>
+
     </div>
 </div>

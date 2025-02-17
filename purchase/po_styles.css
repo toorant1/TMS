@@ -1,0 +1,49 @@
+/* Sidebar Styles */
+.sidebar {
+    width: 200px;
+    min-height: 100vh;
+    background: #343a40;
+    color: white;
+    position: fixed;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    color: white;
+    padding: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    background: #495057;
+}
+
+/* Main Content */
+.content {
+    margin-left: 0px; /* Adjusted to fit sidebar */
+    padding: 50px;
+}
+
+/* Form Styles */
+.form-container {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+/* Table Styles */
+.table th,
+.table td {
+    text-align: center;
+}
+
+.table thead {
+    background-color: #212529;
+    color: white;
+}
+
+.alert {
+    margin-bottom: 20px;
+}

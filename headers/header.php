@@ -42,11 +42,19 @@ require_once __DIR__ . '/../database/helpers.php';
                     <a class="nav-link active" href="<?= base_url('quotations/dashboard.php'); ?>">Quotations</a>
                 </li>
 
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="<?= base_url('purchase/dashboard.php'); ?>">Tickets</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link active" href="<?= base_url('ticket/dashboard.php'); ?>">Tickets</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="<?= base_url('billing/dashboard.php'); ?>">Billing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="<?= base_url('quarry/dashboard.php'); ?>">Quarry</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="<?= base_url('settings/dashboard.php'); ?>">Settings</a>
@@ -68,3 +76,5 @@ require_once __DIR__ . '/../database/helpers.php';
         </div>
     </div>
 </nav>
+
+

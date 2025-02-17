@@ -2,3 +2,9 @@ CREATE INDEX idx_master_user_id ON master_email_configuration (master_user_id);
 
 
 
+CREATE TABLE customer_sites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    site_name VARCHAR(255) NOT NULL,
+    master_user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);

@@ -99,9 +99,9 @@ $master_userid = $_SESSION['master_userid'];
         <div class="col">
             <div class="card h-100">
                 <div class="card-body">
-                    <h5 class="card-title">Audit Logs</h5>
-                    <p class="card-text">View and manage system audit logs.</p>
-                    <a href="audit_logs.php" class="btn btn-primary">View Logs</a>
+                    <h5 class="card-title">Periodic Email Setup</h5>
+                    <p class="card-text">View and manage system Periodic Setups</p>
+                    <a href="../settings/periodic_reports_on_emails/dashboard.php" class="btn btn-primary">Manage</a>
                 </div>
             </div>
         </div>

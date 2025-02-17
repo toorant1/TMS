@@ -1,0 +1,58 @@
+POST Data: Array
+(
+    [supplier_id] => 2
+    [supplier_address] => Valsad, Vapi, Vapi, Gujarat, 321456, India
+    [contact_name] => 8
+    [mobile_no] => 333 | jkjk | jk@dfs.com
+    [company_id] => 2
+    [po_number] => 
+    [po_date] => 2025-02-14
+    [quotation_no] => jjkjk
+    [quotation_date] => 2025-02-14
+    [inco_term] => CPT
+    [inco_term_remark] => klkl
+    [payment_term] => klkl
+    [payment_term_remark] => klkl
+    [material_description] => Array
+        (
+            [0] => 
+        )
+
+    [special_remark] => 
+    [material_name] => 
+    [make] => 
+    [hsn_sac] => 
+    [quantity] => 
+    [unit] => 
+    [unit_price] => 
+    [total] => 
+    [gst_percentage] => 
+    [gst_total] => 
+    [grand_total] => 
+    [remark] => 
+    [general_terms] => 
+    [payment_terms] => 
+    [delivery_terms] => 
+    [additional_notes] => 
+    [personal_notes] => 
+    [materials] => [{"material_id":"1","make":"Hikvision","hsn_sac":"9924","quantity":"1","unit":"MTR","unit_price":"100","total":"100.00","gst_percentage":"18%","gst_total":"18.00","grand_total":"118.00","material_description":"","special_remark":""}]
+)
+Decoded Materials: Array
+(
+    [0] => Array
+        (
+            [material_id] => 1
+            [make] => Hikvision
+            [hsn_sac] => 9924
+            [quantity] => 1
+            [unit] => MTR
+            [unit_price] => 100
+            [total] => 100.00
+            [gst_percentage] => 18%
+            [gst_total] => 18.00
+            [grand_total] => 118.00
+            [material_description] => 
+            [special_remark] => 
+        )
+
+)

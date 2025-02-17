@@ -104,7 +104,7 @@ if (!empty($filters['main_cause'])) {
 }
 
 // Order Results
-$query .= " ORDER BY  mt.id desc";
+$query .= " ORDER BY mt.ticket_date DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
